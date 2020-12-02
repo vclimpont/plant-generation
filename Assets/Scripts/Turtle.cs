@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,21 +8,23 @@ public class Turtle
     struct State
     {
         public Vector3 position;
-        public float translation;
-        public float rotation;
+        public Vector3 translation;
+        public Vector3 orientation;
     }
 
     private LinkedList<State> savedStates;
     public Vector3 CrtPosition { get; private set; }
-    public float CrtTranslation { get; private set; }
-    public float CrtRotation { get; private set; }
+    public Vector3 CrtTranslation { get; private set; }
+    public Vector3 CrtOrientation { get; private set; }
 
-    public Turtle(Vector3 startPosition, float startTranslation, float startRotation)
+    public Turtle(Vector3 startPosition, Vector3 startTranslation, Vector3 startRotation)
     {
         savedStates = new LinkedList<State>();
         CrtPosition = startPosition;
         CrtTranslation = startTranslation;
-        CrtRotation = startRotation;
+        CrtOrientation = startRotation;
+
+        Debug.Log(GetOrientedTranslation(new Vector3(0, 1, 0), new float[,] { { 0, 0, -1 }, { 0, 1, 0 }, { 1, 0, 0 } }));
     }
 
     public void Push()
@@ -29,7 +32,7 @@ public class Turtle
         State s = new State();
         s.position = CrtPosition;
         s.translation = CrtTranslation;
-        s.rotation = CrtRotation;
+        s.orientation = CrtOrientation;
         savedStates.AddLast(s);
     }
 
@@ -39,20 +42,33 @@ public class Turtle
         savedStates.RemoveLast();
         CrtPosition = s.position;
         CrtTranslation = s.translation;
-        CrtRotation = s.rotation;
+        CrtOrientation = s.orientation;
     }
 
-    public void Rotate(float alpha)
+    public void Rotate(int i, float alpha, bool d = false)
     {
-        CrtRotation += alpha;
+        float[,] rM = GetRotationMatrix(i, alpha);
+        
+        if(d)
+        {
+            string s = "";
+            for (int j = 0; j < rM.GetLength(0); j++)
+            {
+                for (int k = 0; k < rM.GetLength(1); k++)
+                {
+                    s += rM[j, k] + " ";
+                }
+                s += " | ";
+            }
+            Debug.Log(s);
+        }
+
+        CrtTranslation = GetOrientedTranslation(CrtTranslation, rM);
     }
 
     public void Translate()
     {
-        CrtPosition += new Vector3(
-            CrtTranslation * Mathf.Cos(CrtRotation * Mathf.Deg2Rad),
-            CrtTranslation * Mathf.Sin(CrtRotation * Mathf.Deg2Rad),
-            0);
+        CrtPosition += CrtTranslation;
     }
 
     public void MultiplyTranslation(float f)
@@ -60,26 +76,46 @@ public class Turtle
         CrtTranslation *= f;
     }
 
-    float[,] GetRotationMatrix(int i, float alpha)
+    private Vector3 GetOrientedTranslation(Vector3 crtTranslation, float[,] rM)
     {
+        float[] tArr = new float[] { crtTranslation.x, crtTranslation.y, crtTranslation.z };
+        float[] newTArr = new float[3];
+
+        for (int j = 0; j < rM.GetLength(1); j++)
+        {
+            float s = 0;
+            for (int k = 0; k < tArr.Length; k++)
+            {
+                s += tArr[k] * rM[k, j];
+            }
+            newTArr[j] = s;
+        }
+
+        return new Vector3(newTArr[0], newTArr[1], newTArr[2]);
+    }
+
+    private float[,] GetRotationMatrix(int i, float alpha)
+    {
+        float alphaRad = Mathf.Deg2Rad * alpha;
+
         switch (i)
         {
             case 0:
                 return new float[,] { 
                     { 1, 0, 0 }, 
-                    { 0, Mathf.Cos(alpha), -Mathf.Sin(alpha) },
-                    { 0, Mathf.Sin(alpha), Mathf.Cos(alpha) }
+                    { 0, Mathf.Cos(alphaRad), -Mathf.Sin(alphaRad) },
+                    { 0, Mathf.Sin(alphaRad), Mathf.Cos(alphaRad) }
                 };
             case 1:
                 return new float[,] {
-                    { Mathf.Cos(alpha), 0, -Mathf.Sin(alpha) },
+                    { Mathf.Cos(alphaRad), 0, -Mathf.Sin(alphaRad) },
                     { 0, 1, 0 },
-                    { Mathf.Sin(alpha), 0, Mathf.Cos(alpha) }
+                    { Mathf.Sin(alphaRad), 0, Mathf.Cos(alphaRad) }
                 };
             case 2:
                 return new float[,] {
-                    { Mathf.Cos(alpha), Mathf.Sin(alpha), 0 },
-                    { -Mathf.Sin(alpha), Mathf.Cos(alpha), 0 },
+                    { Mathf.Cos(alphaRad), Mathf.Sin(alphaRad), 0 },
+                    { -Mathf.Sin(alphaRad), Mathf.Cos(alphaRad), 0 },
                     { 0, 0, 1 }
                 };
             default:

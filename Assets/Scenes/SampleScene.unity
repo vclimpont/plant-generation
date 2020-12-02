@@ -300,13 +300,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 736982537}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.057262864, y: -0.00076536863, z: 0.00004389948, w: 0.99835885}
   m_LocalPosition: {x: 0, y: 0, z: 19.3}
   m_LocalScale: {x: 15, y: 15, z: 100}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -6.5650005, y: -0.08800001, z: 0.010000001}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,6 +436,6 @@ MonoBehaviour:
   branchPrefab: {fileID: 3241474552483940750, guid: 04059933f362a3744906aa9186dd0793,
     type: 3}
   woodMaterial: {fileID: 2100000, guid: 8cbd43e97c9101f4f9ebf01b895aa23d, type: 2}
-  n: 7
-  angle: 25.7
-  axiom: X
+  n: 2
+  angle: 90
+  axiom: A

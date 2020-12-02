@@ -22,18 +22,23 @@ public class LSystem : MonoBehaviour
         parentGO.transform.position = new Vector3(0, 0, -5);
 
         rules = new List<Rule>();
-        turtle = new Turtle(new Vector3(0, 0, -5), 1f, 90f);
+        turtle = new Turtle(new Vector3(0, 0, -5), new Vector3(0, 1, 0), Vector3.zero);
 
-        Rule r1 = new Rule('X', new string[] { "F[+X][-X]FX" });
+        Rule r1 = new Rule('A', new string[] { "B-F+CFC+F-D&F^D-F+&&CFC+F+B//" });
         rules.Add(r1);
-        Rule r2 = new Rule('F', new string[] { "FF" });
+        Rule r2 = new Rule('B', new string[] { "A&F^CFB^F^D^^-F-D^|F^B|FC^F^A//" });
         rules.Add(r2);
+        Rule r3 = new Rule('C', new string[] { "|D^|F^B-F+C^F^A&&FA&F^C+F+B^F^D//" });
+        rules.Add(r3);
+        Rule r4 = new Rule('D', new string[] { "|CFB-F+B|FA&F^A&&FB-F+B|FC//" });
+        rules.Add(r4);
 
         sentence = axiom;
 
         for (int i = 0; i < n; i++)
         {
             Generate();
+            Debug.Log(sentence);
         }
 
         MoveTurtle();
@@ -64,10 +69,31 @@ public class LSystem : MonoBehaviour
                     DrawLine(startPos, endPos);
                     break;
                 case '+':
-                    turtle.Rotate(angle);
+                    turtle.Rotate(2, angle);
                     break;
                 case '-':
-                    turtle.Rotate(-angle);
+                    turtle.Rotate(2, -angle);
+                    break;
+                case '&':
+                    //Debug.Log(turtle.CrtTranslation);
+                    turtle.Rotate(1, angle);
+                    //Debug.Log(turtle.CrtTranslation);
+                    break;
+                case '^':
+                    Debug.Log("^");
+                    turtle.Rotate(1, -angle);
+                    break;
+                case '_':
+                    Debug.Log("_");
+                    turtle.Rotate(0, angle);
+                    break;
+                case '/':
+                    Debug.Log("/");
+                    turtle.Rotate(0, -angle);
+                    break;
+                case '|':
+                    Debug.Log("|");
+                    turtle.Rotate(2, 180f);
                     break;
                 case '[':
                     turtle.Push();
@@ -80,15 +106,15 @@ public class LSystem : MonoBehaviour
             }
         }
 
-        turtle.MultiplyTranslation(0.75f);
+        turtle.MultiplyTranslation(1f);
     }
 
     void DrawObject(Vector3 startPos, Vector3 endPos)
     {
-        Vector3 position = (startPos + endPos) * 0.5f;
-        GameObject branchGO = Instantiate(branchPrefab, position, Quaternion.Euler(0, 0, turtle.CrtRotation - 90f));
-        branchGO.transform.localScale = Vector3.one * turtle.CrtTranslation * 0.5f;
-        branchGO.transform.parent = parentGO.transform;
+        //Vector3 position = (startPos + endPos) * 0.5f;
+        //GameObject branchGO = Instantiate(branchPrefab, position, Quaternion.Euler(0, 0, turtle.CrtOrientation - 90f));
+        //branchGO.transform.localScale = Vector3.one * turtle.CrtTranslation * 0.5f;
+        //branchGO.transform.parent = parentGO.transform;
     }
 
     void DrawLine(Vector3 startPos, Vector3 endPos)
