@@ -435,6 +435,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   branchPrefab: {fileID: 3241474552483940750, guid: 04059933f362a3744906aa9186dd0793,
     type: 3}
-  n: 5
+  woodMaterial: {fileID: 2100000, guid: 8cbd43e97c9101f4f9ebf01b895aa23d, type: 2}
+  n: 7
   angle: 25.7
   axiom: X
