@@ -22,16 +22,16 @@ public class LSystem : MonoBehaviour
         parentGO.transform.position = new Vector3(0, 0, -5);
 
         rules = new List<Rule>();
-        turtle = new Turtle(new Vector3(0, 0, -5), new Vector3(0, 1, 0), Vector3.zero);
+        turtle = new Turtle(new Vector3(0, 0, -5), new Vector3(0, 1, 0));
 
-        Rule r1 = new Rule('A', new string[] { "B-F+CFC+F-D&F^D-F+&&CFC+F+B//" });
+        Rule r1 = new Rule('X', new string[] { "F[+X]F[-X]+X" });
         rules.Add(r1);
-        Rule r2 = new Rule('B', new string[] { "A&F^CFB^F^D^^-F-D^|F^B|FC^F^A//" });
+        Rule r2 = new Rule('F', new string[] { "FF" });
         rules.Add(r2);
-        Rule r3 = new Rule('C', new string[] { "|D^|F^B-F+C^F^A&&FA&F^C+F+B^F^D//" });
-        rules.Add(r3);
-        Rule r4 = new Rule('D', new string[] { "|CFB-F+B|FA&F^A&&FB-F+B|FC//" });
-        rules.Add(r4);
+        //Rule r3 = new Rule('C', new string[] { "D∧|F∧B-F+C∧F∧A&&FA&F∧C+F+B∧F∧D/" });
+        //rules.Add(r3);
+        //Rule r4 = new Rule('D', new string[] { "CFB-F+B|FA&F∧A&&FB-F+B|FC/" });
+        //rules.Add(r4);
 
         sentence = axiom;
 
@@ -67,6 +67,7 @@ public class LSystem : MonoBehaviour
                     turtle.Translate();
                     Vector3 endPos = turtle.CrtPosition;
                     DrawLine(startPos, endPos);
+                    //DrawObject(startPos, endPos);
                     break;
                 case '+':
                     turtle.Rotate(2, angle);
@@ -75,24 +76,18 @@ public class LSystem : MonoBehaviour
                     turtle.Rotate(2, -angle);
                     break;
                 case '&':
-                    //Debug.Log(turtle.CrtTranslation);
                     turtle.Rotate(1, angle);
-                    //Debug.Log(turtle.CrtTranslation);
                     break;
-                case '^':
-                    Debug.Log("^");
+                case '∧':
                     turtle.Rotate(1, -angle);
                     break;
                 case '_':
-                    Debug.Log("_");
                     turtle.Rotate(0, angle);
                     break;
                 case '/':
-                    Debug.Log("/");
                     turtle.Rotate(0, -angle);
                     break;
                 case '|':
-                    Debug.Log("|");
                     turtle.Rotate(2, 180f);
                     break;
                 case '[':
@@ -111,10 +106,10 @@ public class LSystem : MonoBehaviour
 
     void DrawObject(Vector3 startPos, Vector3 endPos)
     {
-        //Vector3 position = (startPos + endPos) * 0.5f;
-        //GameObject branchGO = Instantiate(branchPrefab, position, Quaternion.Euler(0, 0, turtle.CrtOrientation - 90f));
-        //branchGO.transform.localScale = Vector3.one * turtle.CrtTranslation * 0.5f;
-        //branchGO.transform.parent = parentGO.transform;
+        Vector3 position = (startPos + endPos) * 0.5f;
+        GameObject branchGO = Instantiate(branchPrefab, position, Quaternion.Euler(turtle.CrtTranslation * -90f));
+        branchGO.transform.localScale = Vector3.one * 0.5f;
+        branchGO.transform.parent = parentGO.transform;
     }
 
     void DrawLine(Vector3 startPos, Vector3 endPos)
@@ -143,26 +138,4 @@ public class LSystem : MonoBehaviour
 
         return ch.ToString();
     }
-
-    //void CombineMeshes()
-    //{
-    //    meshFilters = parentGO.GetComponentsInChildren<MeshFilter>();
-    //    combine = new CombineInstance[meshFilters.Length];
-    //    MeshRenderer parentMesh = parentGO.AddComponent<MeshRenderer>();
-    //    parentMesh.material = parentGO.GetComponentInChildren<MeshRenderer>().material;
-
-    //    int i = 0;
-    //    while (i < meshFilters.Length)
-    //    {
-    //        combine[i].mesh = meshFilters[i].sharedMesh;
-    //        combine[i].transform = meshFilters[i].transform.localToWorldMatrix;
-    //        meshFilters[i].gameObject.SetActive(false);
-
-    //        i++;
-    //    }
-    //    parentGO.AddComponent<MeshFilter>();
-    //    parentGO.transform.GetComponent<MeshFilter>().mesh = new Mesh();
-    //    parentGO.transform.GetComponent<MeshFilter>().mesh.CombineMeshes(combine);
-    //    parentGO.SetActive(true);
-    //}
 }

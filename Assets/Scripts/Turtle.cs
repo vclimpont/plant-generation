@@ -9,22 +9,17 @@ public class Turtle
     {
         public Vector3 position;
         public Vector3 translation;
-        public Vector3 orientation;
     }
 
     private LinkedList<State> savedStates;
     public Vector3 CrtPosition { get; private set; }
     public Vector3 CrtTranslation { get; private set; }
-    public Vector3 CrtOrientation { get; private set; }
 
-    public Turtle(Vector3 startPosition, Vector3 startTranslation, Vector3 startRotation)
+    public Turtle(Vector3 startPosition, Vector3 startTranslation)
     {
         savedStates = new LinkedList<State>();
         CrtPosition = startPosition;
         CrtTranslation = startTranslation;
-        CrtOrientation = startRotation;
-
-        Debug.Log(GetOrientedTranslation(new Vector3(0, 1, 0), new float[,] { { 0, 0, -1 }, { 0, 1, 0 }, { 1, 0, 0 } }));
     }
 
     public void Push()
@@ -32,7 +27,6 @@ public class Turtle
         State s = new State();
         s.position = CrtPosition;
         s.translation = CrtTranslation;
-        s.orientation = CrtOrientation;
         savedStates.AddLast(s);
     }
 
@@ -42,7 +36,6 @@ public class Turtle
         savedStates.RemoveLast();
         CrtPosition = s.position;
         CrtTranslation = s.translation;
-        CrtOrientation = s.orientation;
     }
 
     public void Rotate(int i, float alpha, bool d = false)
