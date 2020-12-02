@@ -59,4 +59,31 @@ public class Turtle
     {
         CrtTranslation *= f;
     }
+
+    float[,] GetRotationMatrix(int i, float alpha)
+    {
+        switch (i)
+        {
+            case 0:
+                return new float[,] { 
+                    { 1, 0, 0 }, 
+                    { 0, Mathf.Cos(alpha), -Mathf.Sin(alpha) },
+                    { 0, Mathf.Sin(alpha), Mathf.Cos(alpha) }
+                };
+            case 1:
+                return new float[,] {
+                    { Mathf.Cos(alpha), 0, -Mathf.Sin(alpha) },
+                    { 0, 1, 0 },
+                    { Mathf.Sin(alpha), 0, Mathf.Cos(alpha) }
+                };
+            case 2:
+                return new float[,] {
+                    { Mathf.Cos(alpha), Mathf.Sin(alpha), 0 },
+                    { -Mathf.Sin(alpha), Mathf.Cos(alpha), 0 },
+                    { 0, 0, 1 }
+                };
+            default:
+                return null;
+        }
+    }
 }
