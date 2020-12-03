@@ -8,20 +8,23 @@ public class Turtle
     {
         public Vector3 position;
         public float translation;
-        public float rotation;
+        public float theta;
+        public float phi;
     }
 
     private LinkedList<State> savedStates;
     public Vector3 CrtPosition { get; private set; }
     public float CrtTranslation { get; private set; }
-    public float CrtRotation { get; private set; }
+    public float CrtTheta { get; private set; }
+    public float CrtPhi { get; private set; }
 
-    public Turtle(Vector3 startPosition, float startTranslation, float startRotation)
+    public Turtle(Vector3 startPosition, float startTranslation, float startTheta, float startPhi)
     {
         savedStates = new LinkedList<State>();
         CrtPosition = startPosition;
         CrtTranslation = startTranslation;
-        CrtRotation = startRotation;
+        CrtTheta = startTheta;
+        CrtPhi = startPhi;
     }
 
     public void Push()
@@ -29,7 +32,8 @@ public class Turtle
         State s = new State();
         s.position = CrtPosition;
         s.translation = CrtTranslation;
-        s.rotation = CrtRotation;
+        s.theta = CrtTheta;
+        s.phi = CrtPhi;
         savedStates.AddLast(s);
     }
 
@@ -39,20 +43,26 @@ public class Turtle
         savedStates.RemoveLast();
         CrtPosition = s.position;
         CrtTranslation = s.translation;
-        CrtRotation = s.rotation;
+        CrtTheta = s.theta;
+        CrtPhi = s.phi;
     }
 
-    public void Rotate(float alpha)
+    public void RotateTheta(float alpha)
     {
-        CrtRotation += alpha;
+        CrtTheta += alpha;
+    }
+
+    public void RotatePhi(float alpha)
+    {
+        CrtPhi += alpha;
     }
 
     public void Translate()
     {
         CrtPosition += new Vector3(
-            CrtTranslation * Mathf.Cos(CrtRotation * Mathf.Deg2Rad),
-            CrtTranslation * Mathf.Sin(CrtRotation * Mathf.Deg2Rad),
-            0);
+            CrtTranslation * Mathf.Sin(CrtPhi * Mathf.Deg2Rad) * Mathf.Cos(CrtTheta * Mathf.Deg2Rad),
+            CrtTranslation * Mathf.Sin(CrtPhi * Mathf.Deg2Rad) * Mathf.Sin(CrtTheta * Mathf.Deg2Rad),
+            CrtTranslation * Mathf.Cos(CrtPhi * Mathf.Deg2Rad));
     }
 
     public void MultiplyTranslation(float f)

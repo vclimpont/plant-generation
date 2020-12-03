@@ -7,7 +7,8 @@ public class LSystem : MonoBehaviour
     public GameObject branchPrefab;
     public Material woodMaterial;
     public int n;
-    public float angle;
+    public float theta;
+    public float phi;
     public string axiom;
 
     private List<Rule> rules;
@@ -22,18 +23,17 @@ public class LSystem : MonoBehaviour
         parentGO.transform.position = new Vector3(0, 0, -5);
 
         rules = new List<Rule>();
-        turtle = new Turtle(new Vector3(0, 0, -5), 1f, 90f);
+        turtle = new Turtle(new Vector3(0, 0, -5), 1f, 90f, 90f);
 
-        Rule r1 = new Rule('X', new string[] { "F[+X][-X]FX" });
-        rules.Add(r1);
-        Rule r2 = new Rule('F', new string[] { "FF" });
-        rules.Add(r2);
+        rules.Add(new Rule('X', new string[] { "F&[+X][-X]^FX" }));
+        rules.Add(new Rule('F', new string[] { "FF" }));
 
         sentence = axiom;
 
         for (int i = 0; i < n; i++)
         {
             Generate();
+            Debug.Log(sentence);
         }
 
         MoveTurtle();
@@ -62,12 +62,19 @@ public class LSystem : MonoBehaviour
                     turtle.Translate();
                     Vector3 endPos = turtle.CrtPosition;
                     DrawLine(startPos, endPos);
+                    //DrawObject(startPos, endPos);
                     break;
                 case '+':
-                    turtle.Rotate(angle);
+                    turtle.RotateTheta(theta);
                     break;
                 case '-':
-                    turtle.Rotate(-angle);
+                    turtle.RotateTheta(-theta);
+                    break;
+                case '&':
+                    turtle.RotatePhi(phi);
+                    break;
+                case '^':
+                    turtle.RotatePhi(-phi);
                     break;
                 case '[':
                     turtle.Push();
@@ -86,7 +93,7 @@ public class LSystem : MonoBehaviour
     void DrawObject(Vector3 startPos, Vector3 endPos)
     {
         Vector3 position = (startPos + endPos) * 0.5f;
-        GameObject branchGO = Instantiate(branchPrefab, position, Quaternion.Euler(0, 0, turtle.CrtRotation - 90f));
+        GameObject branchGO = Instantiate(branchPrefab, position, Quaternion.Euler(-1 * (turtle.CrtPhi -90f), 0, turtle.CrtTheta - 90f));
         branchGO.transform.localScale = Vector3.one * turtle.CrtTranslation * 0.5f;
         branchGO.transform.parent = parentGO.transform;
     }
