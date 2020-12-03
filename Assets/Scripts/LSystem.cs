@@ -25,7 +25,10 @@ public class LSystem : MonoBehaviour
         rules = new List<Rule>();
         turtle = new Turtle(new Vector3(0, 0, -5), 1f, 90f, 90f);
 
-        rules.Add(new Rule('X', new string[] { "F&[+X][-X]^FX" }));
+        //rules.Add(new Rule('X', new string[] { "F[+X][-X][^X][&X]FX" }));
+        //rules.Add(new Rule('F', new string[] { "FF" }));
+
+        rules.Add(new Rule('X', new string[] { "F[+X][-X][^X][&X]FX" }));
         rules.Add(new Rule('F', new string[] { "FF" }));
 
         sentence = axiom;
@@ -33,7 +36,6 @@ public class LSystem : MonoBehaviour
         for (int i = 0; i < n; i++)
         {
             Generate();
-            Debug.Log(sentence);
         }
 
         MoveTurtle();
@@ -87,7 +89,7 @@ public class LSystem : MonoBehaviour
             }
         }
 
-        turtle.MultiplyTranslation(0.75f);
+        turtle.MultiplyTranslation(0.95f);
     }
 
     void DrawObject(Vector3 startPos, Vector3 endPos)
