@@ -79,7 +79,7 @@ public class Turtle
             float s = 0;
             for (int k = 0; k < tArr.Length; k++)
             {
-                s += tArr[k] * rM[k, j];
+                s += rM[k, j] * tArr[k];
             }
             newTArr[j] = s;
         }

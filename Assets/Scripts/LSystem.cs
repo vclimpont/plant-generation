@@ -24,14 +24,12 @@ public class LSystem : MonoBehaviour
         rules = new List<Rule>();
         turtle = new Turtle(new Vector3(0, 0, -5), new Vector3(0, 1, 0));
 
-        Rule r1 = new Rule('X', new string[] { "F[+X]F[-X]+X" });
-        rules.Add(r1);
-        Rule r2 = new Rule('F', new string[] { "FF" });
-        rules.Add(r2);
-        //Rule r3 = new Rule('C', new string[] { "D∧|F∧B-F+C∧F∧A&&FA&F∧C+F+B∧F∧D/" });
-        //rules.Add(r3);
-        //Rule r4 = new Rule('D', new string[] { "CFB-F+B|FA&F∧A&&FB-F+B|FC/" });
-        //rules.Add(r4);
+        rules.Add(new Rule('A', new string[] { "B-F+CFC+F-D&F∧D-F+&&CFC+F+B//" }));
+        rules.Add(new Rule('B', new string[] { "A&F∧CFB∧F∧D∧∧-F-D∧|F∧B|FC∧F∧A//" }));
+        rules.Add(new Rule('C', new string[] { "|D∧|F∧B-F+C∧F∧A&&FA&F∧C+F+B∧F∧D//" }));
+        rules.Add(new Rule('D', new string[] { "|CFB-F+B|FA&F∧A&&FB-F+B|FC//" }));
+        //rules.Add(new Rule('X', new string[] { "F-[[X]+X]+F[+FX]-X" }));
+        //rules.Add(new Rule('F', new string[] { "FF" }));
 
         sentence = axiom;
 
@@ -76,16 +74,16 @@ public class LSystem : MonoBehaviour
                     turtle.Rotate(2, -angle);
                     break;
                 case '&':
-                    turtle.Rotate(1, angle);
-                    break;
-                case '∧':
-                    turtle.Rotate(1, -angle);
-                    break;
-                case '_':
                     turtle.Rotate(0, angle);
                     break;
-                case '/':
+                case '∧':
                     turtle.Rotate(0, -angle);
+                    break;
+                case '_':
+                    turtle.Rotate(1, angle);
+                    break;
+                case '/':
+                    turtle.Rotate(1, -angle);
                     break;
                 case '|':
                     turtle.Rotate(2, 180f);
