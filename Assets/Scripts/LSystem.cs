@@ -21,24 +21,40 @@ public class LSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        parentGO = new GameObject("parentTree");
-        parentGO.transform.position = new Vector3(0, 0, -5);
-
         rules = new List<Rule>();
+
+        #region RULES
+        //rules.Add(new Rule('X', new string[] { "F[+X][-X][^X][&X]FX", "F[+X][^X]FX", "F[-X][&X]FX" }));
+        //rules.Add(new Rule('F', new string[] { "FF" }));
+
+        //rules.Add(new Rule('X', new string[] { "F[+X]F[-X]F[^X]F[&X]+X", "F[+X]F[-X]+X", "F[^X]F[&X]+X" }));
+        //rules.Add(new Rule('F', new string[] { "FF" }));
+
+        //rules.Add(new Rule('X', new string[] { "F-[[X]+X][[X]^X]+F[+FX][&FX]-X", "F-[[X]+X]+F[&FX]-X", "F-[[X]^X]+F[+FX]-X" }));
+        //rules.Add(new Rule('F', new string[] { "FF" }));
+
+        //rules.Add(new Rule('F', new string[] { "FF-[-F+F+F][^F&F&F]+[+F-F-F][&F^F^F]", "FF-[-F+F+F]+[&F^F^F]", "FF-[^F&F&F]+[+F-F-F]" }));
+
+        //rules.Add(new Rule('X', new string[] { "F[+X][^X]F[-X][&X][X]", "F[+X][^X][X]", "F[-X][&X][X]" }));
+        //rules.Add(new Rule('F', new string[] { "FF" }));
+
+        //rules.Add(new Rule('X', new string[] { "F[+X][^X]F[-X][&X]FX", "F[+X][^X]FX", "F[-X][&X]FX" }));
+        //rules.Add(new Rule('F', new string[] { "FF" }));
+        #endregion RULES
+
+        InvokeRepeating("DrawTree", 0f, 3f);
+    }
+
+    void DrawTree()
+    {
         turtle = new Turtle(new Vector3(0, 0, -5), 1f, 90f, 90f);
 
-        //rules.Add(new Rule('X', new string[] { "F[+X][-X][^X][&X]FX" }));
-        //rules.Add(new Rule('F', new string[] { "FF" }));
-
-        rules.Add(new Rule('X', new string[] { "F[+X]F[-X]F[^X]F[&X]+X" }));
-        rules.Add(new Rule('F', new string[] { "FF" }));
-
-        //rules.Add(new Rule('X', new string[] { "F-[[X]+X][[X]^X]+F[+FX][&FX]-X" }));
-        //rules.Add(new Rule('F', new string[] { "FF" }));
-
-        //rules.Add(new Rule('F', new string[] { "FF-[-F+F+F][^F&F&F]+[+F-F-F][&F^F^F]" }));
-        //rules.Add(new Rule('F', new string[] { "F[+F][^F]F[-F][&F][F]" }));
-        //rules.Add(new Rule('F', new string[] { "F[+F][^F]F[-F][&F]F" }));
+        if(parentGO != null)
+        {
+            Destroy(parentGO);
+        }
+        parentGO = new GameObject("parentTree");
+        parentGO.transform.position = new Vector3(0, 0, -5);
 
         sentence = axiom;
 
@@ -100,7 +116,7 @@ public class LSystem : MonoBehaviour
             }
         }
 
-        turtle.MultiplyTranslation(0.75f);
+        turtle.MultiplyTranslation(0.90f);
     }
 
     void DrawBranch(Vector3 startPos, Vector3 endPos)
@@ -140,7 +156,7 @@ public class LSystem : MonoBehaviour
         {
             if (ch == rule.C)
             {
-                return rule.Subs[0];
+                return rule.GetRandomRule();
             }
         }
 
