@@ -28,8 +28,15 @@ public class LSystem : MonoBehaviour
         //rules.Add(new Rule('X', new string[] { "F[+X][-X][^X][&X]FX" }));
         //rules.Add(new Rule('F', new string[] { "FF" }));
 
-        rules.Add(new Rule('X', new string[] { "F[+X][-X][^X][&X]FX" }));
+        rules.Add(new Rule('X', new string[] { "F[+X]F[-X]F[^X]F[&X]+X" }));
         rules.Add(new Rule('F', new string[] { "FF" }));
+
+        //rules.Add(new Rule('X', new string[] { "F-[[X]+X][[X]^X]+F[+FX][&FX]-X" }));
+        //rules.Add(new Rule('F', new string[] { "FF" }));
+
+        //rules.Add(new Rule('F', new string[] { "FF-[-F+F+F][^F&F&F]+[+F-F-F][&F^F^F]" }));
+        //rules.Add(new Rule('F', new string[] { "F[+F][^F]F[-F][&F][F]" }));
+        //rules.Add(new Rule('F', new string[] { "F[+F][^F]F[-F][&F]F" }));
 
         sentence = axiom;
 
@@ -63,8 +70,8 @@ public class LSystem : MonoBehaviour
                     Vector3 startPos = turtle.CrtPosition;
                     turtle.Translate();
                     Vector3 endPos = turtle.CrtPosition;
-                    DrawLine(startPos, endPos);
-                    //DrawObject(startPos, endPos);
+                    //DrawLine(startPos, endPos);
+                    DrawObject(startPos, endPos);
                     break;
                 case '+':
                     turtle.RotateTheta(theta);
@@ -89,7 +96,7 @@ public class LSystem : MonoBehaviour
             }
         }
 
-        turtle.MultiplyTranslation(0.95f);
+        turtle.MultiplyTranslation(0.75f);
     }
 
     void DrawObject(Vector3 startPos, Vector3 endPos)
@@ -126,26 +133,4 @@ public class LSystem : MonoBehaviour
 
         return ch.ToString();
     }
-
-    //void CombineMeshes()
-    //{
-    //    meshFilters = parentGO.GetComponentsInChildren<MeshFilter>();
-    //    combine = new CombineInstance[meshFilters.Length];
-    //    MeshRenderer parentMesh = parentGO.AddComponent<MeshRenderer>();
-    //    parentMesh.material = parentGO.GetComponentInChildren<MeshRenderer>().material;
-
-    //    int i = 0;
-    //    while (i < meshFilters.Length)
-    //    {
-    //        combine[i].mesh = meshFilters[i].sharedMesh;
-    //        combine[i].transform = meshFilters[i].transform.localToWorldMatrix;
-    //        meshFilters[i].gameObject.SetActive(false);
-
-    //        i++;
-    //    }
-    //    parentGO.AddComponent<MeshFilter>();
-    //    parentGO.transform.GetComponent<MeshFilter>().mesh = new Mesh();
-    //    parentGO.transform.GetComponent<MeshFilter>().mesh.CombineMeshes(combine);
-    //    parentGO.SetActive(true);
-    //}
 }
