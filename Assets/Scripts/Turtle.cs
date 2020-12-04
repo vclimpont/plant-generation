@@ -59,7 +59,12 @@ public class Turtle
 
     public void Translate()
     {
-        CrtPosition += new Vector3(
+        CrtPosition += GetRotatedTranslation();
+    }
+
+    public Vector3 GetRotatedTranslation()
+    {
+        return new Vector3(
             CrtTranslation * Mathf.Sin(CrtPhi * Mathf.Deg2Rad) * Mathf.Cos(CrtTheta * Mathf.Deg2Rad),
             CrtTranslation * Mathf.Sin(CrtPhi * Mathf.Deg2Rad) * Mathf.Sin(CrtTheta * Mathf.Deg2Rad),
             CrtTranslation * Mathf.Cos(CrtPhi * Mathf.Deg2Rad));
@@ -68,32 +73,5 @@ public class Turtle
     public void MultiplyTranslation(float f)
     {
         CrtTranslation *= f;
-    }
-
-    float[,] GetRotationMatrix(int i, float alpha)
-    {
-        switch (i)
-        {
-            case 0:
-                return new float[,] { 
-                    { 1, 0, 0 }, 
-                    { 0, Mathf.Cos(alpha), -Mathf.Sin(alpha) },
-                    { 0, Mathf.Sin(alpha), Mathf.Cos(alpha) }
-                };
-            case 1:
-                return new float[,] {
-                    { Mathf.Cos(alpha), 0, -Mathf.Sin(alpha) },
-                    { 0, 1, 0 },
-                    { Mathf.Sin(alpha), 0, Mathf.Cos(alpha) }
-                };
-            case 2:
-                return new float[,] {
-                    { Mathf.Cos(alpha), Mathf.Sin(alpha), 0 },
-                    { -Mathf.Sin(alpha), Mathf.Cos(alpha), 0 },
-                    { 0, 0, 1 }
-                };
-            default:
-                return null;
-        }
     }
 }

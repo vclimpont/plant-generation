@@ -5,7 +5,9 @@ using UnityEngine;
 public class LSystem : MonoBehaviour
 {
     public GameObject branchPrefab;
-    public Material woodMaterial;
+    public GameObject leafPrefab;
+    public GameObject branchLinePrefab;
+    public GameObject leafLinePrefab;
     public int n;
     public float theta;
     public float phi;
@@ -70,8 +72,8 @@ public class LSystem : MonoBehaviour
                     Vector3 startPos = turtle.CrtPosition;
                     turtle.Translate();
                     Vector3 endPos = turtle.CrtPosition;
-                    //DrawLine(startPos, endPos);
-                    DrawObject(startPos, endPos);
+                    DrawBranchLine(startPos, endPos);
+                   // DrawBranch(startPos, endPos);
                     break;
                 case '+':
                     turtle.RotateTheta(theta);
@@ -89,6 +91,8 @@ public class LSystem : MonoBehaviour
                     turtle.Push();
                     break;
                 case ']':
+                    DrawLeafLine(turtle.CrtPosition, turtle.CrtPosition + turtle.GetRotatedTranslation());
+                    //DrawLeaf(turtle.CrtPosition);
                     turtle.Pull();
                     break;
                 default:
@@ -99,7 +103,7 @@ public class LSystem : MonoBehaviour
         turtle.MultiplyTranslation(0.75f);
     }
 
-    void DrawObject(Vector3 startPos, Vector3 endPos)
+    void DrawBranch(Vector3 startPos, Vector3 endPos)
     {
         Vector3 position = (startPos + endPos) * 0.5f;
         GameObject branchGO = Instantiate(branchPrefab, position, Quaternion.Euler(-1 * (turtle.CrtPhi -90f), 0, turtle.CrtTheta - 90f));
@@ -107,18 +111,27 @@ public class LSystem : MonoBehaviour
         branchGO.transform.parent = parentGO.transform;
     }
 
-    void DrawLine(Vector3 startPos, Vector3 endPos)
+    void DrawLeaf(Vector3 position)
     {
-        GameObject branchGO = new GameObject("branch");
-        LineRenderer line = branchGO.AddComponent<LineRenderer>();
-        line.positionCount = 2;
+        GameObject leafGO = Instantiate(leafPrefab, position, Quaternion.identity);
+        leafGO.transform.localScale = Vector3.one * Random.Range(0.75f, 1.5f);
+        leafGO.transform.parent = parentGO.transform;
+    }
+
+    void DrawBranchLine(Vector3 startPos, Vector3 endPos)
+    {
+        GameObject branchLine = Instantiate(branchLinePrefab, parentGO.transform);
+        LineRenderer line = branchLine.GetComponent<LineRenderer>();
         line.SetPosition(0, startPos);
         line.SetPosition(1, endPos);
-        line.material = woodMaterial;
-        line.generateLightingData = true;
-        line.startWidth = 0.5f;
-        line.endWidth = 0.5f;
-        branchGO.transform.parent = parentGO.transform;
+    }
+
+    void DrawLeafLine(Vector3 startPos, Vector3 endPos)
+    {
+        GameObject leafLine = Instantiate(leafLinePrefab, parentGO.transform);
+        LineRenderer line = leafLine.GetComponent<LineRenderer>();
+        line.SetPosition(0, startPos);
+        line.SetPosition(1, endPos);
     }
 
     string GetSubInRules(char ch)
