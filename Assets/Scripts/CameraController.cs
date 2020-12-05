@@ -67,6 +67,12 @@ public class CameraController : MonoBehaviour
         {
             SpeedTranslation(-deltaSpeed);
         }
+
+        float scrollDelta;
+        if((scrollDelta = Input.mouseScrollDelta.y) != 0)
+        {
+            SpeedTranslation(scrollDelta * deltaSpeed);
+        }
     }
 
     void RotateEuler(float pitch, float yaw, float roll)
@@ -87,6 +93,8 @@ public class CameraController : MonoBehaviour
 
     void SpeedTranslation(float dtSpeed)
     {
-        translationSpeed += dtSpeed;
+        float dtTranslation = translationSpeed + dtSpeed;
+
+        translationSpeed = dtTranslation > 0 ? dtTranslation : translationSpeed;
     }
 }
