@@ -159,7 +159,7 @@ public class LSystem : MonoBehaviour
     {
         Vector3 position = (startPos + endPos) * 0.5f;
         GameObject branchGO = Instantiate(branchPrefab, position, Quaternion.Euler(-1 * (turtle.CrtPhi -90f), 0, turtle.CrtTheta - 90f));
-        branchGO.transform.localScale = Vector3.one * turtle.CrtTranslation * 0.5f;
+        branchGO.transform.localScale = new Vector3(Mathf.Max(turtle.CrtWidth, 0.25f), 1f, Mathf.Max(turtle.CrtWidth, 0.25f));
         branchGO.transform.parent = parentGO.transform;
         branchesGO.AddLast(branchGO);
     }
@@ -167,7 +167,7 @@ public class LSystem : MonoBehaviour
     void DrawLeaf(Vector3 position)
     {
         GameObject leafGO = Instantiate(leafPrefab, position, Quaternion.identity);
-        leafGO.transform.localScale = Vector3.one * Random.Range(0.75f, 1.5f);
+        leafGO.transform.localScale = Vector3.one * Random.Range(0.75f, 1.75f);
         leafGO.transform.parent = parentGO.transform;
         leavesGO.AddLast(leafGO);
     }

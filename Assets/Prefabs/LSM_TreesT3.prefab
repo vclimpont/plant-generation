@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3045537421830830601
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3045537421830830603}
+  - component: {fileID: 3045537421830830602}
+  m_Layer: 0
+  m_Name: LSM_TreesT3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 0
+--- !u!4 &3045537421830830603
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3045537421830830601}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3045537421830830602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3045537421830830601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb3716592ac6fed4eb5a57e52baf9b53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  branchPrefab: {fileID: 3241474552483940750, guid: 04059933f362a3744906aa9186dd0793,
+    type: 3}
+  leafPrefab: {fileID: 72804577254809964, guid: cc4d8ac530b90bf42a91872f680323bf,
+    type: 3}
+  branchLinePrefab: {fileID: 1338262312499414566, guid: 537f8af4d2e0ef74bbb1eca515aea3ad,
+    type: 3}
+  leafLinePrefab: {fileID: 7723446063584495436, guid: 7c58f954e06a5594d86a806d412a27db,
+    type: 3}
+  branchMaterial: {fileID: 2100000, guid: 8cbd43e97c9101f4f9ebf01b895aa23d, type: 2}
+  leafMaterial: {fileID: 2100000, guid: 0a56da17d1cc33c47b4b3228373a61d4, type: 2}
+  treePositions:
+  - {x: 200, y: 0, z: -400}
+  - {x: 150, y: 0, z: -300}
+  - {x: 250, y: 0, z: -200}
+  - {x: 200, y: 0, z: -100}
+  - {x: 150, y: 0, z: 0}
+  - {x: 250, y: 0, z: 100}
+  - {x: 200, y: 0, z: 200}
+  - {x: 150, y: 0, z: 300}
+  - {x: 250, y: 0, z: 400}
+  - {x: 200, y: 0, z: 500}
+  scaleFactor: 0.985
+  iterations: 5
+  theta: 22.5
+  phi: 22.5
+  axiom: X
+  rulesArray:
+  - F-[[X]+X][[X]^X]+F[+FX][&FX]-X
+  - F-[[X]+X]+F[&FX]-X
+  - F-[[X]^X]+F[+FX]-X
