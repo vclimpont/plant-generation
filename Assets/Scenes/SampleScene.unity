@@ -404,6 +404,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   translationSpeed: 400
+  deltaSpeed: 20
   rotationSpeed: 300
 --- !u!1 &1540563766
 GameObject:

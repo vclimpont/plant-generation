@@ -5,10 +5,19 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public float translationSpeed;
+    public float deltaSpeed;
     public float rotationSpeed;
 
+    private Vector3 startPosition;
+    private Vector3 startRotation;
     private float yaw;
     private float pitch;
+
+    void Start()
+    {
+        startPosition = transform.position;
+        startRotation = transform.rotation.eulerAngles;
+    }
 
     // Update is called once per frame
     void Update()
@@ -45,6 +54,19 @@ public class CameraController : MonoBehaviour
 
             RotateEuler(pitch, yaw, 0f);
         }
+
+        if(Input.GetKeyDown(KeyCode.F))
+        {
+            ResetTransform();
+        }
+        if(Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            SpeedTranslation(deltaSpeed);
+        }
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            SpeedTranslation(-deltaSpeed);
+        }
     }
 
     void RotateEuler(float pitch, float yaw, float roll)
@@ -55,5 +77,16 @@ public class CameraController : MonoBehaviour
     void Translate(Vector3 direction, float value)
     {
         transform.Translate(direction * value);
+    }
+
+    void ResetTransform()
+    {
+        transform.position = startPosition;
+        transform.eulerAngles = startRotation;
+    }
+
+    void SpeedTranslation(float dtSpeed)
+    {
+        translationSpeed += dtSpeed;
     }
 }
