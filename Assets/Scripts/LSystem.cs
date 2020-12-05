@@ -13,7 +13,6 @@ public class LSystem : MonoBehaviour
     public Material leafMaterial;
 
     [Header("LSystem Parameters")]
-    public Vector3[] treePositions;
     [Range(0,1)]
     public float scaleFactor;
     public int iterations;
@@ -24,7 +23,7 @@ public class LSystem : MonoBehaviour
     [Header("Rules")]
     public string[] rulesArray;
 
-    private List<Rule> rules;
+    public List<Rule> Rules { get; set; }
     private string sentence;
     private Turtle turtle;
 
@@ -34,35 +33,16 @@ public class LSystem : MonoBehaviour
     private LinkedList<GameObject> branchesGO;
     private LinkedList<GameObject> leavesGO;
 
-    // Start is called before the first frame update
-    void Start()
+    public void InitRules()
     {
-        rules = new List<Rule>();
-
-        #region RULES
-        rules.Add(new Rule('X', rulesArray));
-        rules.Add(new Rule('F', new string[] { "FF" }));
-
-        //rules.Add(new Rule('F', new string[] { "FF-[-F+F+F][^F&F&F]+[+F-F-F][&F^F^F]", "FF-[-F+F+F]+[&F^F^F]", "FF-[^F&F&F]+[+F-F-F]" }));
-
-        //rules.Add(new Rule('X', new string[] { "F[+X][^X]F[-X][&X][X]", "F[+X][^X][X]", "F[-X][&X][X]" }));
-        //rules.Add(new Rule('F', new string[] { "FF" }));
-
-        //rules.Add(new Rule('X', new string[] { "F[+X][^X]F[-X][&X]FX", "F[+X][^X]FX", "F[-X][&X]FX" }));
-        //rules.Add(new Rule('F', new string[] { "FF" }));
-        #endregion RULES
-
-        for (int i = 0; i < treePositions.Length; i++)
-        {
-            DrawTree(treePositions[i]);
-        }
-
-        //InvokeRepeating("DrawTree", 0f, 3f);
+        Rules = new List<Rule>();
+        Rules.Add(new Rule('X', rulesArray));
+        Rules.Add(new Rule('F', new string[] { "FF" }));
     }
 
-    void DrawTree(Vector3 position, bool erase = false)
+    public void DrawTree(Vector3 position, bool erase = false)
     {
-        turtle = new Turtle(position, 1f, 90f, 90f, 5f);
+        turtle = new Turtle(position, 1f, 90f, 90f, 8f);
 
         if (parentGO != null && erase)
         {
@@ -167,7 +147,7 @@ public class LSystem : MonoBehaviour
     void DrawLeaf(Vector3 position)
     {
         GameObject leafGO = Instantiate(leafPrefab, position, Quaternion.identity);
-        leafGO.transform.localScale = Vector3.one * Random.Range(0.75f, 1.75f);
+        leafGO.transform.localScale = Vector3.one * Random.Range(0.75f, 2f);
         leafGO.transform.parent = parentGO.transform;
         leavesGO.AddLast(leafGO);
     }
@@ -192,7 +172,7 @@ public class LSystem : MonoBehaviour
 
     string GetSubInRules(char ch)
     {
-        foreach (Rule rule in rules)
+        foreach (Rule rule in Rules)
         {
             if (ch == rule.C)
             {
