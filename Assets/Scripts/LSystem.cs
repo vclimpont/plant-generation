@@ -18,6 +18,8 @@ public class LSystem : MonoBehaviour
     public int iterations;
     public float theta;
     public float phi;
+    [Range(0, 1)]
+    public float variance;
     public string axiom;
 
     [Header("Rules")]
@@ -50,6 +52,7 @@ public class LSystem : MonoBehaviour
         }
 
         parentGO = new GameObject("parentTree");
+        parentGO.isStatic = true;
         parentGO.transform.position = Vector3.zero;
         branchesGO = new LinkedList<GameObject>();
         leavesGO = new LinkedList<GameObject>();
@@ -106,19 +109,19 @@ public class LSystem : MonoBehaviour
                     turtle.MultiplyWidth(scaleFactor);
                     break;
                 case '+':
-                    turtle.RotateTheta(theta);
+                    turtle.RotateTheta(GetVariationOfAngle(theta, variance));
                     turtle.MultiplyWidth(scaleFactor * 0.75f);
                     break;
                 case '-':
-                    turtle.RotateTheta(-theta);
+                    turtle.RotateTheta(-GetVariationOfAngle(theta, variance));
                     turtle.MultiplyWidth(scaleFactor * 0.75f);
                     break;
                 case '&':
-                    turtle.RotatePhi(phi);
+                    turtle.RotatePhi(GetVariationOfAngle(phi, variance));
                     turtle.MultiplyWidth(scaleFactor * 0.75f);
                     break;
                 case '^':
-                    turtle.RotatePhi(-phi);
+                    turtle.RotatePhi(-GetVariationOfAngle(phi, variance));
                     turtle.MultiplyWidth(scaleFactor * 0.75f);
                     break;
                 case '[':
@@ -181,6 +184,12 @@ public class LSystem : MonoBehaviour
         }
 
         return ch.ToString();
+    }
+
+    float GetVariationOfAngle(float angle, float v)
+    {
+        float alpha = angle * v;
+        return angle + Random.Range(-alpha, alpha);
     }
 
     GameObject[] InitObjectsParents(Material mat)

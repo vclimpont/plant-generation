@@ -53,12 +53,11 @@ MonoBehaviour:
     type: 3}
   branchMaterial: {fileID: 2100000, guid: 8cbd43e97c9101f4f9ebf01b895aa23d, type: 2}
   leafMaterial: {fileID: 2100000, guid: 0a56da17d1cc33c47b4b3228373a61d4, type: 2}
-  treePositions:
-  - {x: 0, y: 0, z: -400}
   scaleFactor: 0.985
   iterations: 6
   theta: 25.7
   phi: 25.7
+  variance: 0.8
   axiom: X
   rulesArray:
   - F[+X][-X][^X][&X]FX
