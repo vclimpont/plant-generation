@@ -102,3 +102,54 @@ Cette méthode permet de conserver une structure identique pour chacune des esp�
 ![Arbre type 3 1 angle](https://github.com/vclimpont/plant-generation/blob/main/Images/type31angle.PNG)
 ![Arbre type 3 2 angle](https://github.com/vclimpont/plant-generation/blob/main/Images/type32angle.PNG)
 ## Optimisation des performances
+Lors de la génération d'un arbre, chaque déplacement de la tortue instancie un nouvel objet dans la scène. Chacune des branches et des feuilles d'une espèce générée constitue un objet unique. Un arbre complet représente ainsi en moyenne entre 10 000 et 15 000 meshes.
+
+Dans l'optique de résoudre ces problématiques de performances, le projet se base sur la réécriture de la méthode *CombineMeshes* de Unity. L'idée consiste à combiner les meshes d'un arbre en un seul *MeshFilter*. 
+Cependant, afin d'éviter les restrictions de nombre de vertices d'un mesh imposé par Unity, qui pourrait causer des problèmes lors de la génération d'un grand arbre ; le procédé de fusion des meshes d'un arbre est établi comme suit :
+
+Toutes les branches et feuilles de l'arbre instanciées sont réparties de manière équilibrée dans 10 sous-parents *branchParent* et 10 sous-parents *leafParent*.
+Puis, pour chacun des sous-parents, l'ensemble des meshes des enfants est fusionné en un unique *MeshFilter* ajouté au sous-parent.
+Le nombre de meshes instanciés à chaque arbre passe ainsi de 10 000~15 000 à 20 (un pour chaque sous-parent).
+
+**Résultats :**
+
+Sans fusion | Avec fusion
+------------ | -------------
+2 arbres | 200 arbres
+10 FPS | 30 FPS
+
+Scène de 200 arbres :
+
+![scene](https://github.com/vclimpont/plant-generation/blob/main/Images/scene.PNG)
+
+## Sources
+
+Explication des LSystem :
+
+https://www.youtube.com/watch?v=E1B4UoSQMFw
+
+https://fr.wikipedia.org/wiki/L-Syst%C3%A8me
+
+Structure des branches :
+
+http://algorithmicbotany.org/papers/abop/abop-ch1.pdf (partie 1.6.3)
+
+Déplacement dans l’espace :
+
+http://algorithmicbotany.org/papers/abop/abop-ch1.pdf (partie 1.5)
+
+https://www.bioquest.org/products/files/13157_Real-time%203D%20Plant%20Structure%20Modeling%20by%20L-System.pdf (partie 3)
+
+http://sites.science.oregonstate.edu/math/home/programs/undergrad/CalculusQuestStudyGuides/vcalc/coord/coord.html
+
+Variation du LSystem :
+
+http://algorithmicbotany.org/papers/abop/abop-ch1.pdf (partie 1.7)
+
+Optimisation des performances : 
+
+https://docs.unity3d.com/ScriptReference/Mesh.CombineMeshes.html
+
+https://www.youtube.com/watch?v=NcmPz_nbArY
+
+
