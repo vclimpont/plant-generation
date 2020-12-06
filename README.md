@@ -38,6 +38,8 @@ Pour chaque caractère de la chaîne de caractères finale obtenue, l’interpr�
 
 En déterminant un ensemble de règles cohérent, notamment dans sa structure de modification des états et des rotations, ainsi qu’un faible angle *alpha* de rotation, il est rapidement possible d’obtenir une structure organique semblable à un arbre.
 
+![Arbre 2D](https://github.com/vclimpont/plant-generation/blob/main/Images/arbre2d.PNG)
+
 ## Génération des végétaux
 ### 1. Dans le plan (2D)
 ### 2. Dans l’espace (3D)
