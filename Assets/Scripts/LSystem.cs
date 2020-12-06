@@ -116,14 +116,14 @@ public class LSystem : MonoBehaviour
                     turtle.RotateTheta(-GetVariationOfAngle(theta, variance));
                     turtle.MultiplyWidth(scaleFactor * 0.75f);
                     break;
-                case '&':
-                    turtle.RotatePhi(GetVariationOfAngle(phi, variance));
-                    turtle.MultiplyWidth(scaleFactor * 0.75f);
-                    break;
-                case '^':
-                    turtle.RotatePhi(-GetVariationOfAngle(phi, variance));
-                    turtle.MultiplyWidth(scaleFactor * 0.75f);
-                    break;
+                //case '&':
+                //    turtle.RotatePhi(GetVariationOfAngle(phi, variance));
+                //    turtle.MultiplyWidth(scaleFactor * 0.75f);
+                //    break;
+                //case '^':
+                    //turtle.RotatePhi(-GetVariationOfAngle(phi, variance));
+                    //turtle.MultiplyWidth(scaleFactor * 0.75f);
+                    //break;
                 case '[':
                     turtle.Push();
                     break;
