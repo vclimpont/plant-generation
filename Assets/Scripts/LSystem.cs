@@ -80,6 +80,7 @@ public class LSystem : MonoBehaviour
         {
             CombineMeshes(leavesParent);
         }
+        Debug.Log("hey");
     }
 
     void Generate()
