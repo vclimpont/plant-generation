@@ -14,6 +14,8 @@ Le principe de cette méthode est, de manière récursive et suivant un alphabet
 
 Exemple d’une structure LSystem utilisée dans le projet : 
 
+![Règles 2D](https://github.com/vclimpont/plant-generation/blob/main/Images/regles2d.PNG)
+
 Depuis l’état initial “*X*”, le système substitue à chaque itération tous les caractères “X” et “F” de la chaîne de caractères de l’état actuel par leur équivalent défini dans l’ensemble des règles. 
 
 ### 2. Interprétation de la tortue
