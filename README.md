@@ -31,12 +31,14 @@ L’entité tortue possède :
 
 Pour chaque caractère de la chaîne de caractères finale obtenue, l’interprétation s’effectue telle que :
 * ‘F’ : Se déplace, instancie une nouvelle branche et réduit la largeur des prochaines branches d’un facteur *f*.
-* ‘+’ : Ajoute une valeur alpha définie à l’angle de rotation *theta*
-* ‘-’ : Soustrait une valeur alpha définie à l’angle de rotation *theta*
+* ‘+’ : Ajoute une valeur *alpha* définie à l’angle de rotation *theta* selon l'axe *x*
+* ‘-’ : Soustrait une valeur *alpha* définie à l’angle de rotation *theta* selon l'axe *x*
 * ‘[‘ : Enregistre son état actuel dans la liste d’états
 * ‘]’ : Instancie une feuille, retourne au dernier état enregistré dans la liste
 
 En déterminant un ensemble de règles cohérent, notamment dans sa structure de modification des états et des rotations, ainsi qu’un faible angle *alpha* de rotation, il est rapidement possible d’obtenir une structure organique semblable à un arbre.
+
+Exemple d'un arbre en 2D :
 
 ![Arbre 2D](https://github.com/vclimpont/plant-generation/blob/main/Images/arbre2d.PNG)
 
@@ -44,6 +46,7 @@ En déterminant un ensemble de règles cohérent, notamment dans sa structure de
 Les règles établies pour le fonctionnement de la tortue soulèvent intrinsèquement des problématiques de déplacements dans le plan et l'espace. La résolution de ces problèmes est basée sur la détermination, pour chaque nouveau déplacement, d'un système de coordonnées cartésiennes dans 2 et 3 dimensions.
 ### 1. Dans le plan (2D)
 Lors d'un déplacement dans le plan, la position d'arrivée *(x, y)* de la tortue est ajoutée à sa position actuelle *(xp, yp)* telle que *(x, y)* :
+
 ![Coords 2D](https://github.com/vclimpont/plant-generation/blob/main/Images/coord2d.PNG)
 ![Plane](https://github.com/vclimpont/plant-generation/blob/main/Images/plane.PNG)
 
@@ -52,6 +55,7 @@ avec :
 * *theta* = la valeur de l'angle de rotation actuelle de la tortue
 ### 2. Dans l’espace (3D)
 Lors d'un déplacement dans l'espace, l'axe *z* est ajouté à l'équation. La position d'arrivée *(x, y, z)* de la tortue est ajoutée à sa position actuelle *(xp, yp, zp)* telle que *(x, y, z)* :
+
 ![Coords 3D](https://github.com/vclimpont/plant-generation/blob/main/Images/coord3d.PNG)
 ![Space](https://github.com/vclimpont/plant-generation/blob/main/Images/space.PNG)
 
@@ -59,7 +63,21 @@ avec :
 * *rho* = la valeur de translation actuelle de la tortue
 * *theta* = la valeur de l'angle de rotation actuelle de la tortue selon l'axe *x*
 * *phi* = la valeur de l'angle de rotation actuelle de la tortue selon l'axe *z*
+
+Dans le cadre d'une génération de végétaux en trois dimensions, de nouvelles valeurs d'interprétation sont ajoutées aux actions de la tortue :
+* ‘&’ : Ajoute une valeur *beta* définie à l’angle de rotation *phi* selon l'axe *z*
+* ‘^’ : Soustrait une valeur *beta* définie à l’angle de rotation *phi* selon l'axe *z*
+
+![Règles 2D](https://github.com/vclimpont/plant-generation/blob/main/Images/regles3d.PNG)
+
+Exemple d'un arbre en 3D :
+
+![Arbre 2D](https://github.com/vclimpont/plant-generation/blob/main/Images/arbre3d.PNG)
+
 ## Variation des végétaux
+Toutes les générations de végétaux issues d'une même espèce ; autrement dit, toutes les générations d'un LSystem qui suivent un même ensemble de règles, sont pour le moment identiques. Dans l'optique d'introduire des variations de structure, tout en conservant l'aspect général du spécimen généré, le projet inclut deux types de randomisation : une variation des règles et une variation du comportement de la tortue.
 ### 1. LSystems stochastiques
+L'idée générale du LSystem stochastique consiste à varier la substitution de caractères au sein même des règles établies. 
+Ainsi, plusieurs 
 ### 2. Variance des angles
 ## Optimisation des performances
