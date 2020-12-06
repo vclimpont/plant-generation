@@ -8,20 +8,26 @@ public class Turtle
     {
         public Vector3 position;
         public float translation;
-        public float rotation;
+        public float theta;
+        public float phi;
+        public float width;
     }
 
     private LinkedList<State> savedStates;
     public Vector3 CrtPosition { get; private set; }
     public float CrtTranslation { get; private set; }
-    public float CrtRotation { get; private set; }
+    public float CrtTheta { get; private set; }
+    public float CrtPhi { get; private set; }
+    public float CrtWidth { get; private set; }
 
-    public Turtle(Vector3 startPosition, float startTranslation, float startRotation)
+    public Turtle(Vector3 startPosition, float startTranslation, float startTheta, float startPhi, float startWidth)
     {
         savedStates = new LinkedList<State>();
         CrtPosition = startPosition;
         CrtTranslation = startTranslation;
-        CrtRotation = startRotation;
+        CrtTheta = startTheta;
+        CrtPhi = startPhi;
+        CrtWidth = startWidth;
     }
 
     public void Push()
@@ -29,7 +35,9 @@ public class Turtle
         State s = new State();
         s.position = CrtPosition;
         s.translation = CrtTranslation;
-        s.rotation = CrtRotation;
+        s.theta = CrtTheta;
+        s.phi = CrtPhi;
+        s.width = CrtWidth;
         savedStates.AddLast(s);
     }
 
@@ -39,51 +47,36 @@ public class Turtle
         savedStates.RemoveLast();
         CrtPosition = s.position;
         CrtTranslation = s.translation;
-        CrtRotation = s.rotation;
+        CrtTheta = s.theta;
+        CrtPhi = s.phi;
+        CrtWidth = s.width;
     }
 
-    public void Rotate(float alpha)
+    public void RotateTheta(float alpha)
     {
-        CrtRotation += alpha;
+        CrtTheta += alpha;
+    }
+
+    public void RotatePhi(float alpha)
+    {
+        CrtPhi += alpha;
     }
 
     public void Translate()
     {
-        CrtPosition += new Vector3(
-            CrtTranslation * Mathf.Cos(CrtRotation * Mathf.Deg2Rad),
-            CrtTranslation * Mathf.Sin(CrtRotation * Mathf.Deg2Rad),
-            0);
+        CrtPosition += GetRotatedTranslation();
     }
 
-    public void MultiplyTranslation(float f)
+    public Vector3 GetRotatedTranslation()
     {
-        CrtTranslation *= f;
+        return new Vector3(
+            CrtTranslation * Mathf.Sin(CrtPhi * Mathf.Deg2Rad) * Mathf.Cos(CrtTheta * Mathf.Deg2Rad),
+            CrtTranslation * Mathf.Sin(CrtPhi * Mathf.Deg2Rad) * Mathf.Sin(CrtTheta * Mathf.Deg2Rad),
+            CrtTranslation * Mathf.Cos(CrtPhi * Mathf.Deg2Rad));
     }
 
-    float[,] GetRotationMatrix(int i, float alpha)
+    public void MultiplyWidth(float f)
     {
-        switch (i)
-        {
-            case 0:
-                return new float[,] { 
-                    { 1, 0, 0 }, 
-                    { 0, Mathf.Cos(alpha), -Mathf.Sin(alpha) },
-                    { 0, Mathf.Sin(alpha), Mathf.Cos(alpha) }
-                };
-            case 1:
-                return new float[,] {
-                    { Mathf.Cos(alpha), 0, -Mathf.Sin(alpha) },
-                    { 0, 1, 0 },
-                    { Mathf.Sin(alpha), 0, Mathf.Cos(alpha) }
-                };
-            case 2:
-                return new float[,] {
-                    { Mathf.Cos(alpha), Mathf.Sin(alpha), 0 },
-                    { -Mathf.Sin(alpha), Mathf.Cos(alpha), 0 },
-                    { 0, 0, 1 }
-                };
-            default:
-                return null;
-        }
+        CrtWidth *= f;
     }
 }
