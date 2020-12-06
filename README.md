@@ -68,16 +68,37 @@ Dans le cadre d'une génération de végétaux en trois dimensions, de nouvelles
 * ‘&’ : Ajoute une valeur *beta* définie à l’angle de rotation *phi* selon l'axe *z*
 * ‘^’ : Soustrait une valeur *beta* définie à l’angle de rotation *phi* selon l'axe *z*
 
-![Règles 2D](https://github.com/vclimpont/plant-generation/blob/main/Images/regles3d.PNG)
+![Règles 3D](https://github.com/vclimpont/plant-generation/blob/main/Images/regles3d.PNG)
 
 Exemple d'un arbre en 3D :
 
 ![Arbre 2D](https://github.com/vclimpont/plant-generation/blob/main/Images/arbre3d.PNG)
 
 ## Variation des végétaux
-Toutes les générations de végétaux issues d'une même espèce ; autrement dit, toutes les générations d'un LSystem qui suivent un même ensemble de règles, sont pour le moment identiques. Dans l'optique d'introduire des variations de structure, tout en conservant l'aspect général du spécimen généré, le projet inclut deux types de randomisation : une variation des règles et une variation du comportement de la tortue.
+Toutes les générations de végétaux issues d'une même espèce ; autrement dit, toutes les générations d'un LSystem qui suivent un même ensemble de règles, sont pour le moment identiques. Dans l'optique d'introduire des variations de structure, tout en conservant l'aspect général du specimen généré, le projet inclut deux types de randomisation : une variation des règles et une variation du comportement de la tortue.
 ### 1. LSystems stochastiques
 L'idée générale du LSystem stochastique consiste à varier la substitution de caractères au sein même des règles établies. 
-Ainsi, plusieurs 
+Ainsi, la règle de substitution de chaque caractère est remplacée par un ensemble de règles différentes, qui conservent toutefois une structure cohérente.
+
+Exemple de règles stochastiques : 
+
+![Règles stochastiques](https://github.com/vclimpont/plant-generation/blob/main/Images/reglesstochastiques.PNG)
+
+Lorsqu'un caractère doit être substitué, une chaîne de caractères est piochée de manière aléatoire dans son ensemble de règles avec des probabilités équivalentes. (1/3 dans l'exemple ci-dessus). 
+Cette méthode permet de conserver l'aspect général de l'espèce générée en incluant des modifications structurelles : 
+
+![Arbre type 3 1](https://github.com/vclimpont/plant-generation/blob/main/Images/type31.PNG)
+![Arbre type 3 2](https://github.com/vclimpont/plant-generation/blob/main/Images/type32.PNG)
+
 ### 2. Variance des angles
+La seconde méthode consiste à inclure une variation aléatoire des angles de rotation *theta* et *phi* dans le déplacement de la tortue.
+Ainsi, à chaque interprétation des caractères **+ - &** et **^**, correspondant aux modifications des angles de rotation de la tortue : 
+soit *v*, une variance donnée dans l'intervalle [0, 1] et *alpha*, la valeur de rotation établie initialement :
+
+  *delta_rotation = alpha + random_between ( -alpha * v , alpha * v)* 
+  
+Cette méthode permet de conserver une structure identique pour chacune des espèces de végétaux, en incluant des variations dans l'écartement des branches :
+
+![Arbre type 3 1 angle](https://github.com/vclimpont/plant-generation/blob/main/Images/type31angle.PNG)
+![Arbre type 3 2 angle](https://github.com/vclimpont/plant-generation/blob/main/Images/type32angle.PNG)
 ## Optimisation des performances
