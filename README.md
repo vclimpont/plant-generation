@@ -41,8 +41,24 @@ En déterminant un ensemble de règles cohérent, notamment dans sa structure de
 ![Arbre 2D](https://github.com/vclimpont/plant-generation/blob/main/Images/arbre2d.PNG)
 
 ## Génération des végétaux
+Les règles établies pour le fonctionnement de la tortue soulèvent intrinsèquement des problématiques de déplacements dans le plan et l'espace. La résolution de ces problèmes est basée sur la détermination, pour chaque nouveau déplacement, d'un système de coordonnées cartésiennes dans 2 et 3 dimensions.
 ### 1. Dans le plan (2D)
+Lors d'un déplacement dans le plan, la position d'arrivée *(x, y)* de la tortue est ajoutée à sa position actuelle *(xp, yp)* telle que *(x, y)* :
+![Coords 2D](https://github.com/vclimpont/plant-generation/blob/main/Images/coord2d.PNG)
+![Plane](https://github.com/vclimpont/plant-generation/blob/main/Images/plane.PNG)
+
+avec : 
+* *r* = la valeur de translation actuelle de la tortue
+* *theta* = la valeur de l'angle de rotation actuelle de la tortue
 ### 2. Dans l’espace (3D)
+Lors d'un déplacement dans l'espace, l'axe *z* est ajouté à l'équation. La position d'arrivée *(x, y, z)* de la tortue est ajoutée à sa position actuelle *(xp, yp, zp)* telle que *(x, y, z)* :
+![Coords 3D](https://github.com/vclimpont/plant-generation/blob/main/Images/coord3d.PNG)
+![Space](https://github.com/vclimpont/plant-generation/blob/main/Images/space.PNG)
+
+avec :
+* *rho* = la valeur de translation actuelle de la tortue
+* *theta* = la valeur de l'angle de rotation actuelle de la tortue selon l'axe *x*
+* *phi* = la valeur de l'angle de rotation actuelle de la tortue selon l'axe *z*
 ## Variation des végétaux
 ### 1. LSystems stochastiques
 ### 2. Variance des angles
