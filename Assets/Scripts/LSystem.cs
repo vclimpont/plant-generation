@@ -80,7 +80,6 @@ public class LSystem : MonoBehaviour
         {
             CombineMeshes(leavesParent);
         }
-        Debug.Log("hey");
     }
 
     void Generate()
@@ -151,7 +150,7 @@ public class LSystem : MonoBehaviour
     void DrawLeaf(Vector3 position)
     {
         GameObject leafGO = Instantiate(leafPrefab, position, Quaternion.identity);
-        leafGO.transform.localScale = Vector3.one * Random.Range(0.75f, 2f);
+        leafGO.transform.localScale = Vector3.one * Random.Range(0.1f, 2.25f);
         leafGO.transform.parent = parentGO.transform;
         leavesGO.AddLast(leafGO);
     }
@@ -243,14 +242,6 @@ public class LSystem : MonoBehaviour
             meshFilters[i + 1].gameObject.SetActive(false);
 
             i++;
-        }
-
-        for (int j = 0; j < combine.Length; j++)
-        {
-            if(combine[j].mesh == null)
-            {
-                Debug.Log(j);
-            }
         }
 
         obj.transform.GetComponent<MeshFilter>().mesh = new Mesh();

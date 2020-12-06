@@ -61,5 +61,5 @@ MonoBehaviour:
   axiom: X
   rulesArray:
   - F[+X][-X][^X][&X]FX
-  - F[+X][^X]FX
-  - F[-X][&X]FX
+  - F[-X][&X][+X]FX
+  - F[+X][^X][-X]FX
