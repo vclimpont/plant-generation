@@ -102,6 +102,7 @@ Cette méthode permet de conserver une structure identique pour chacune des esp�
 ![Arbre type 3 1 angle](https://github.com/vclimpont/plant-generation/blob/main/Images/type31angle.PNG)
 ![Arbre type 3 2 angle](https://github.com/vclimpont/plant-generation/blob/main/Images/type32angle.PNG)
 ## Optimisation des performances
+
 Lors de la génération d'un arbre, chaque déplacement de la tortue instancie un nouvel objet dans la scène. Chacune des branches et des feuilles d'une espèce générée constitue un objet unique. Un arbre complet représente ainsi en moyenne entre 10 000 et 15 000 meshes.
 
 Dans l'optique de résoudre ces problématiques de performances, le projet se base sur la réécriture de la méthode *CombineMeshes* de Unity. L'idée consiste à combiner les meshes d'un arbre en un seul *MeshFilter*. 
